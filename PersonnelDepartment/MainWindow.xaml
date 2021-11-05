@@ -1,0 +1,80 @@
+﻿<Window x:Class="PersonnelDepartment.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:PersonnelDepartment"
+        mc:Ignorable="d"
+        Title="Отдел кадров" Height="450" Width="900" Closing="Window_Closing">
+    <Window.Resources>
+        <ContextMenu x:Key="lwMenu">
+            <ContextMenu.Items>
+                <MenuItem Header="Удалить" Name="delete" Click="delete_Click"/>
+            </ContextMenu.Items>
+        </ContextMenu>
+        <Style x:Key="MyItemContainerStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="ContextMenu" Value="{StaticResource lwMenu}" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Background="LightGray">
+            <MenuItem Name="MenuItemFile" Header="Файл">
+                <MenuItem x:Name="MenuItemCreate" Header="Создать" Click="MenuItemCreate_Click"/>
+                <MenuItem x:Name="MenuItemSave" Header="Сохранить" Click="MenuItemSave_Click"/>
+                <MenuItem x:Name="MenuItemSaveAs" Header="Сохранить как" Click="MenuItemSaveAs_Click"/>
+                <MenuItem x:Name="MenuItemOpen" Header="Открыть" Click="MenuItemOpen_Click"/>
+                <MenuItem x:Name="MenuItemClose" Header="Выход" Click="MenuItemClose_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <ListView x:Name="ListView" Grid.Column="0" Grid.Row="2" IsSynchronizedWithCurrentItem="False" SelectionMode="Single">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="PreviewMouseDoubleClick" Handler="ListViewItem_PreviewMouseDoubleClick"/>
+                    <Setter Property="ContextMenu" Value="{StaticResource lwMenu}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding SecondNameAndInitials}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeader_Click">Работник</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Position}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Size" Click="GridViewColumnHeader_Click_1">Должность</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Experience}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Date" Click="GridViewColumnHeader_Click_2">Стаж</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#eee">
+
+            <Button x:Name="AddButton" Width="100" Height="20" Margin="10,0,0,0" Click="AddButton_Click">Добавить</Button>
+
+            <Rectangle Width="1" Fill="Black" Stroke="Black" OpacityMask="Black" Margin="10,0" HorizontalAlignment="Center"/>
+
+            <Button x:Name="SearchButton" Width="100" Height="20" Click="SearchButton_Click">Найти</Button>
+
+            <Rectangle Width="1" Fill="Black" Stroke="Black" OpacityMask="Black" Margin="10,0" HorizontalAlignment="Center"/>
+
+            <Label Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center">Стаж работы от:</Label>
+            <xctk:IntegerUpDown x:Name="IntegerUpDown" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Maximum="100" Minimum="0" ValueChanged="IntegerUpDown_ValueChanged" Value="0"></xctk:IntegerUpDown>
+        </StackPanel>
+        
+    </Grid>
+</Window>
